@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-
+from goods.models import Categories
 
 class IndexView(TemplateView):
     template_name = "main/index.html"
