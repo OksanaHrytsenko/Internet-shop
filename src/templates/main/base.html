@@ -91,7 +91,7 @@
                     <ul class="dropdown-menu bg-dark" data-bs-theme="dark">
                         {% tag_categories as categories %}
                         {% for category in categories %}
-                        <li><a class="dropdown-item text-white" href="{% url 'goods:index' %}">{{ category.name }}</a></li>
+                        <li><a class="dropdown-item text-white" href="{% url 'goods:index' category.slug %}">{{ category.name }}</a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -178,13 +178,15 @@
                 </div>
                 <div class="col-lg-10">
                     <!-- Контент на странице -->
-                   {% block content %}
-                    {% endblock content %}
+    {% block content %}
+
+    {% endblock content %}
                 </div>
             </div>
         </div>
     </section>
     {% block footer %}
+
     {% endblock footer %}
     <script src="{% static 'deps/js/jquery/jquery-3.7.0.min.js' %}"></script>
     <script src="{% static 'deps/js/jquery-events.js' %}"></script>

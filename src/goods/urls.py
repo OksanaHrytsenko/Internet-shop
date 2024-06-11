@@ -1,11 +1,9 @@
 from django.urls import path
-
-from goods.views import CatalogView, ProductView
+from goods.views import catalog, get_product
 
 app_name = 'goods'
 
 urlpatterns = [
-    path("", CatalogView.as_view(), name="index"),
-    path("product/", ProductView.as_view(), name="product"),
-
+    path("<slug:category_slug>/", catalog, name="index"),
+    path("product/<slug:product_slug>/", get_product, name="product"),
 ]
