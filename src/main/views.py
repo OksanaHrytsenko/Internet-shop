@@ -12,8 +12,8 @@ class AboutView(TemplateView):
     http_method_names = ["get"]
     extra_context = {
         'title': 'Home - About us',
-        'content': 'About us',
-        'text_on_page': 'This is the best shop with the best products,we  have everything you were looking for'
+        'content': 'О нас',
+        'text_on_page': 'Текст о том почему этот магазин такой классный, и какой хороший товар.'
     }
 
 

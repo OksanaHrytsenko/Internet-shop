@@ -5,6 +5,10 @@
 <link rel="stylesheet" href="{% static 'deps/css/my_footer_css.css' %}">
 {% endblock css %}
 
+{% block modal_cart %}
+{% include 'includes/cart_button.html' %}
+{% endblock modal_cart %}
+
 {% block content %}
 <h1 class="mt-5 pt-5"><strong>Магазин мебели HOME</strong></h1>
 {% endblock content %}
@@ -16,7 +20,6 @@
         </div>
     </footer>
 {% endblock footer %}
-
 
 
 
