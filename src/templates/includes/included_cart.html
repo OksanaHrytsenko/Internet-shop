@@ -1,6 +1,5 @@
 {% load static %}
 
-
 <div class="card mb-3 text-bg-light shadow-lg">
     {% for cart in carts %}
         <div class="card-header">
@@ -14,14 +13,18 @@
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-dark btn-sm decrement"
                                     data-cart-id=""
-                                    data-cart-change-url="">-</button>
+                                    data-cart-change-url="">
+
+                                    -</button>
                             </span>
                             <input type="text" class="form-control number" value="{{ cart.quantity }}"
                                 readonly>
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-dark btn-sm increment"
                                     data-cart-id=""
-                                    data-cart-change-url="">+</button>
+                                    data-cart-change-url="">
+
+                                    +</button>
                             </span>
                         </div>
                     </div>
@@ -32,6 +35,7 @@
                     <div class="col p-0">
                         <a href="{% url 'cart:cart_remove' cart.id %}" class="remove-from-cart"
                         data-cart-id="">
+
                             <img class="mx-1" src="{% static 'deps/icons/trash3-fill.svg' %}"
                                 alt="Catalog Icon" width="16" height="16">
                         </a>
@@ -47,8 +51,8 @@
         <h4 class="float-left"><strong>{{ carts.total_price }} $</strong></h4>
     </div>
 </div>
-{% if carts and not order%}
-<a class="btn btn-dark" href="">
+{% if carts and not order %}
+<a class="btn btn-dark" href="{% url 'orders:create_order' %}">
     Оформить заказ
 </a>
 {% endif %}

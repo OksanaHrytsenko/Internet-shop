@@ -1,16 +1,13 @@
-from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
+from django.contrib import auth, messages
 from django.db.models import Prefetch
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
-
+from carts.models import Cart
 from orders.models import Order, OrderItem
-from users.forms import UserLoginForm, UserRegistrationForm, ProfileForm
 
-
-class Cart:
-    pass
+from users.forms import ProfileForm, UserLoginForm, UserRegistrationForm
 
 
 def login(request):
@@ -28,9 +25,11 @@ def login(request):
                 messages.success(request, f"{username}, Вы вошли в аккаунт")
 
                 if session_key:
+                    # delete old authorized user carts
                     forgot_carts = Cart.objects.filter(user=user)
                     if forgot_carts.exists():
                         forgot_carts.delete()
+                    # add new authorized user carts from anonimous session
                     Cart.objects.filter(session_key=session_key).update(user=user)
 
                 redirect_page = request.POST.get('next', None)
@@ -53,9 +52,12 @@ def registration(request):
         form = UserRegistrationForm(data=request.POST)
         if form.is_valid():
             form.save()
+
             session_key = request.session.session_key
+
             user = form.instance
             auth.login(request, user)
+
             if session_key:
                 Cart.objects.filter(session_key=session_key).update(user=user)
             messages.success(request, f"{user.username}, Вы успешно зарегистрированы и вошли в аккаунт")
@@ -77,9 +79,10 @@ def profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Профайл успешно обновлен")
-            return HttpResponseRedirect(reverse('users:profile'))
+            return HttpResponseRedirect(reverse('user:profile'))
     else:
         form = ProfileForm(instance=request.user)
+
     orders = Order.objects.filter(user=request.user).prefetch_related(
         Prefetch(
             "orderitem_set",
@@ -92,7 +95,7 @@ def profile(request):
         'form': form,
         'orders': orders,
     }
-    return render(request,'users/profile.html', context)
+    return render(request, 'users/profile.html', context)
 
 
 def users_cart(request):

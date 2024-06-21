@@ -1,8 +1,8 @@
 {% load static %}
 {% load carts_tags %}
 
- {% user_carts request as carts %}
 
+{% user_carts request as carts %}
 <div>
        <button type="button" class="btn btn-dark btn-secondary d-flex" id="modalButton"
         aria-expanded="false">
@@ -25,10 +25,9 @@
                 <div class="container" id="cart-items-container">
                     <!-- Разметка корзины -->
 
-              {% include "includes/included_cart.html" %}
+                {% include "includes/included_cart.html" %}
                     <!-- Закончилась разметка корзины -->
                 </div>
-                <a class="btn btn-dark" href="orders/create_order.html">Оформить заказ</a>
             </div>
         </div>
     </div>
